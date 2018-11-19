@@ -94,6 +94,16 @@ client.connect()
                 if (err) {
                     res.sendStatus(500);
                 } else {
+                    for(var i=0; i<docs.length; i++) {
+                        fetch('http://localhost:5000', docs[i]
+                            )
+                        .then(res => {
+                            
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                    }
                     client.db(dbName).collection("old").insertMany(docs)
                 }
                 client.db(dbName).collection("delhi").find({ "localage": { $gte: 90 } }).toArray(function (err, docs) {
