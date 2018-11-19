@@ -24,11 +24,16 @@ client.connect((err) => {
 });
 
 client.connect()
-    .then(res => {
-        console.log('client.connect() succeeded');
-        const express = require('express');
-        const app = express();
-        app.use(express.json());
+.then(res => {
+    console.log('client.connect() succeeded');
+    const express = require('express');
+    const app = express();
+    app.use(express.json());
+    app.use(function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+    });
 
         app.post('/add-item', (req, res) => {
             const location = req.query.location;
@@ -54,6 +59,26 @@ client.connect()
             }
           });*/
 
+    app.post('/delete-all-items', (req, res) => {
+        const location = req.query.location;
+        client.db(dbName).collection(location).remove({})
+        .then(success => {
+            console.log(success);
+            res.sendStatus(200);
+        })
+        .catch(error => {
+            console.log(error);
+            res.sendStatus(500);
+        })
+    });
+
+    app.listen(3000, () => {
+        console.log('Example app listening on port 3000!')
+    });
+})
+.catch(err => {
+    console.log(err);
+})
 
         app.get('/get-item', (req, res) => {
             const location = req.query.location;
