@@ -23,7 +23,12 @@ export default class Dashboard extends React.PureComponent {
   }
 
   componentDidMount() {
-    const url = 'http://18.188.218.137/get-items?location=delhi';
+    let url = null;
+    if (this.props.old) {
+      url = 'http://18.188.218.137/get-old';
+    } else {
+      url = 'http://18.188.218.137/get-items?location=delhi';
+    }
     console.log(url);
     fetch(url)
       .then(async (res) => {
