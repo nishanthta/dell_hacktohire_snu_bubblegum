@@ -1,5 +1,5 @@
 from flask import Flask, request
-from inv_predict import xgb_model_api
+from final_predict import xgb_model_api
 import json
 
 app = Flask(__name__)	
