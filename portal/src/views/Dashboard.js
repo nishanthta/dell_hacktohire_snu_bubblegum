@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactTable from 'react-table';
-import { renderIf } from '../renderIf';
+import JsonTable from 'ts-react-json-table';
 
 export default class Dashboard extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       itemData: null,
       cols: null
     }
@@ -42,10 +41,9 @@ export default class Dashboard extends React.PureComponent {
     const data = [{
       name: 'Tanner Linsley',
       age: 26,
-      friend: {
-        name: 'Jason Maurer',
-        age: 23,
-      }
+    }, {
+      name: 'Tandner Linsley',
+      age: 26,
     }];
 
     const columns = [{
@@ -54,22 +52,19 @@ export default class Dashboard extends React.PureComponent {
     }, {
       Header: 'Age',
       accessor: 'age',
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-    }, {
-      id: 'friendName', // Required because our accessor is not a string
-      Header: 'Friend Name',
-      accessor: d => d.friend.name // Custom value accessors!
-    }, {
-      Header: props => <span>Friend Age</span>, // Custom header components!
-      accessor: 'friend.age'
     }];
     this.setState({ itemData: data, cols: columns });
   }
 
   render() {
+    console.log(this.state);
     if (!this.state.itemData || !this.state.cols) {
       return null;
     }
-    return (<ReactTable data={this.state.itemData} columns={this.state.cols} />);
+    return (
+      <div>
+        <JsonTable rows = {this.state.itemData} />
+      </div>
+    );
   }
 }
