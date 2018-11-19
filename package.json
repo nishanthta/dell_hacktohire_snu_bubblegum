@@ -22,6 +22,7 @@
   "homepage": "https://github.com/kanishk98/aging-inventory-predictor#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "mongodb": "^3.1.10"
+    "mongodb": "^3.1.10",
+    "react-bootstrap": "^0.32.4"
   }
 }
