@@ -45,14 +45,13 @@ client.connect()
 
     app.get('/get-items', (req, res) => {
         const location = req.query.location;
-        client.db(dbName).collection(location).find({})
-        .then(response => {
-            res.send(response);
-        })
-        .catch(error => {
-            console.log(error);
-            res.sendStatus(500);
-        })
+        client.db(dbName).collection(location).find({}).toArray(function(err, docs) {
+		if (err) {
+			res.sendStatus(500);
+		} else {
+			res.send(docs);
+		}
+ 	});
     });
 
     app.listen(3000, () => {
