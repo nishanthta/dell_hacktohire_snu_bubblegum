@@ -43,15 +43,29 @@ client.connect()
                 })
         });
 
-        /*app.get('/get-items', (req, res) => {
+        /*app.get('/get-item', (req, res) => {
             const location = req.query.location;
-            client.db(dbName).collection(location).find({}).toArray(function(err, docs) {
+            const id = req.query;
+            client.db(dbName).collection(location).find({"":id}).toArray(function(err, docs) {
             if (err) {
                 res.sendStatus(500);
             } else {
                 res.send(docs);
             }
           });*/
+
+
+        app.get('/get-item', (req, res) => {
+            const location = req.query.location;
+            const id = req.query.id;
+            const result = client.db(dbName).collection(location).findOne({"":id}).toArray((err, docs) => {
+                if (err) {
+                    res.send(JSON.stringify(err));
+                } else {
+                    res.send(docs);
+                }
+            })
+        });
 
         app.get('/get-items', (req, res) => {
             // how many posts can be accomodated in one page
