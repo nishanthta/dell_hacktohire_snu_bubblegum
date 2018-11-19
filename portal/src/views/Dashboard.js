@@ -2,7 +2,7 @@ import React from 'react';
 import JsonTable from 'ts-react-json-table';
 
 
-export default class Dashboard extends React.PureComponent {
+export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
