@@ -24,16 +24,16 @@ client.connect((err) => {
 });
 
 client.connect()
-.then(res => {
-    console.log('client.connect() succeeded');
-    const express = require('express');
-    const app = express();
-    app.use(express.json());
-    app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      next();
-    });
+    .then(res => {
+        console.log('client.connect() succeeded');
+        const express = require('express');
+        const app = express();
+        app.use(express.json());
+        app.use(function (req, res, next) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
+        });
 
         app.post('/add-item', (req, res) => {
             const location = req.query.location;
@@ -48,42 +48,23 @@ client.connect()
                 })
         });
 
-        /*app.get('/get-item', (req, res) => {
+        app.post('/delete-all-items', (req, res) => {
             const location = req.query.location;
-            const id = req.query;
-            client.db(dbName).collection(location).find({"":id}).toArray(function(err, docs) {
-            if (err) {
-                res.sendStatus(500);
-            } else {
-                res.send(docs);
-            }
-          });*/
-
-    app.post('/delete-all-items', (req, res) => {
-        const location = req.query.location;
-        client.db(dbName).collection(location).remove({})
-        .then(success => {
-            console.log(success);
-            res.sendStatus(200);
-        })
-        .catch(error => {
-            console.log(error);
-            res.sendStatus(500);
-        })
-    });
-
-    app.listen(3000, () => {
-        console.log('Example app listening on port 3000!')
-    });
-})
-.catch(err => {
-    console.log(err);
-})
+            client.db(dbName).collection(location).remove({})
+                .then(success => {
+                    console.log(success);
+                    res.sendStatus(200);
+                })
+                .catch(error => {
+                    console.log(error);
+                    res.sendStatus(500);
+                })
+        });
 
         app.get('/get-item', (req, res) => {
             const location = req.query.location;
             const id = req.query.id;
-            const result = client.db(dbName).collection(location).findOne({"":id}).toArray((err, docs) => {
+            const result = client.db(dbName).collection(location).findOne({ "": id }).toArray((err, docs) => {
                 if (err) {
                     res.send(JSON.stringify(err));
                 } else {
@@ -113,6 +94,16 @@ client.connect()
                 if (err) {
                     res.sendStatus(500);
                 } else {
+                    for(var i=0; i<docs.length; i++) {
+                        fetch('http://localhost:5000', docs[i]
+                            )
+                        .then(res => {
+                            
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                    }
                     client.db(dbName).collection("old").insertMany(docs)
                 }
                 client.db(dbName).collection("delhi").find({ "localage": { $gte: 90 } }).toArray(function (err, docs) {
@@ -195,11 +186,10 @@ client.connect()
                     res.sendStatus(500);
                 })
         });
-
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!')
-});
+        app.listen(3000, () => {
+            console.log('Example app listening on port 3000!')
+        });
     })
-    .catch (err => {
-    console.log(err);
-});
+    .catch(err => {
+        console.log(err);
+    });
