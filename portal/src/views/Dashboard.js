@@ -10,11 +10,22 @@ export default class Dashboard extends React.Component {
     }
   }
 
+  moveItem = (item) => {
+
+  }
+
   _onClickCell = (event, columnName, rowData) => {
     console.log(columnName);
     console.log(rowData);
-    if (columnName == 'suggestion' && rowData.age >= 90) {
+    if (columnName == 'localage' && rowData.localage >= 90) {
       // re-route to a new page with details of suggestion
+      let response = window.confirm('Are you sure you want to move this item?');
+      // true if OK, false if Cancel
+      if (response) {
+        this.moveItem(rowData);    
+      } else {
+        console.log('user denied access');
+      }
     }
   }
 
