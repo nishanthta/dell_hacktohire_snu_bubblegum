@@ -73,6 +73,26 @@ client.connect()
             })
         });
 
+        app.post('/move-item', (req, res) => {
+            const src = req.query.src;
+            const dest = req.query.dest;
+            const item = req.body;
+            client.db(dbName).collection(src).findOneAndDelete({_id: ObjectId(item._id)})
+            .then(res1 => {
+                res.sendStatus(200);
+                client.db(dbName).collection(dest).insertOne(item)
+                .then(res2 => {
+                    res.sendStatus(200);
+                })
+                .catch(err2 => {
+                    res.send(JSON.stringify(err2));
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        });
+
         app.get('/get-items', (req, res) => {
             // how many posts can be accomodated in one page
             const perPage = req.query.perPage;

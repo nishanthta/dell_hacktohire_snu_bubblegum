@@ -1,12 +1,14 @@
 from flask import Flask, request
 from final_predict import xgb_model_api
-import json
+import jsonpickle
 
 app = Flask(__name__)	
 
 @app.route('/', methods=['POST'])
 def home():
-	return xgb_model_api(json.loads((request.json)))
+	print(request.get_json(force=True))
+	# print(str(jsonpickle.decode(request.get_json(force=True))))
+	return str(xgb_model_api(request.get_json(force=True)))
 	#return "damn this shit"
 
 
