@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/kanishk98/aging-inventory-predictor/issues"
   },
-  "homepage": "https://github.com/kanishk98/aging-inventory-predictor#readme"
+  "homepage": "https://github.com/kanishk98/aging-inventory-predictor#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
