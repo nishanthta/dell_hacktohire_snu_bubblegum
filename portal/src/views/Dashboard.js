@@ -1,7 +1,8 @@
 import React from 'react';
 import JsonTable from 'ts-react-json-table';
 
-export default class Dashboard extends React.PureComponent {
+
+export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,11 +10,22 @@ export default class Dashboard extends React.PureComponent {
     }
   }
 
+  moveItem = (item) => {
+
+  }
+
   _onClickCell = (event, columnName, rowData) => {
     console.log(columnName);
     console.log(rowData);
-    if (columnName == 'suggestion' && rowData.age >= 90) {
+    if (columnName == 'localage' && rowData.localage >= 90) {
       // re-route to a new page with details of suggestion
+      let response = window.confirm('Are you sure you want to move this item?');
+      // true if OK, false if Cancel
+      if (response) {
+        this.moveItem(rowData);    
+      } else {
+        console.log('user denied access');
+      }
     }
   }
 
@@ -22,7 +34,12 @@ export default class Dashboard extends React.PureComponent {
   }
 
   componentDidMount() {
-    const url = 'http://18.188.218.137/get-items?location=delhi';
+    let url = null;
+    if (this.props.old) {
+      url = 'http://18.188.218.137/get-old';
+    } else {
+      url = 'http://18.188.218.137/get-items?location=delhi';
+    }
     console.log(url);
     fetch(url)
       .then(async (res) => {
@@ -63,9 +80,9 @@ export default class Dashboard extends React.PureComponent {
       return null;
     }
     return (
-      <div>
+      <span>
         <JsonTable onClickCell={this._onClickCell} rows={this.state.itemData} excludeColumns={['_id', 'Binding', 'Creator', 'ProductTypeName', 'companiesMoving', 'govSchemeSize', 'location', 'supplyChennai', 'supplyDelhi', 'supplyMumbai', 'supplyKolkata']} />
-      </div>
+      </span>
     );
   }
 }
