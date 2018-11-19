@@ -1,6 +1,7 @@
 import React from 'react';
 import JsonTable from 'ts-react-json-table';
 
+
 export default class Dashboard extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -63,9 +64,9 @@ export default class Dashboard extends React.PureComponent {
       return null;
     }
     return (
-      <div>
+      <span>
         <JsonTable onClickCell={this._onClickCell} rows={this.state.itemData} excludeColumns={['_id', 'Binding', 'Creator', 'ProductTypeName', 'companiesMoving', 'govSchemeSize', 'location', 'supplyChennai', 'supplyDelhi', 'supplyMumbai', 'supplyKolkata']} />
-      </div>
+      </span>
     );
   }
 }
