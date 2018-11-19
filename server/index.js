@@ -59,6 +59,19 @@ client.connect()
  	});
     });
 
+    app.post('/delete-all-items', (req, res) => {
+        const location = req.query.location;
+        client.db(dbName).collection(location).remove({})
+        .then(success => {
+            console.log(success);
+            res.sendStatus(200);
+        })
+        .catch(error => {
+            console.log(error);
+            res.sendStatus(500);
+        })
+    });
+
     app.listen(3000, () => {
         console.log('Example app listening on port 3000!')
     });

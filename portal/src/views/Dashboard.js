@@ -30,7 +30,7 @@ export default class Dashboard extends React.PureComponent {
       let data = await res.json();
       if (data.age >= 90) {
         // item needs prediction
-        predict(data);
+        this.predict(data);
       }
       console.log(data);
       this.setState({itemData: data});
@@ -41,7 +41,6 @@ export default class Dashboard extends React.PureComponent {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.itemData) {
       return null;
     }
