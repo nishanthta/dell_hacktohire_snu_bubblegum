@@ -25,28 +25,46 @@ export default class Dashboard extends React.PureComponent {
     const url = 'http://18.188.218.137/get-items?location=delhi';
     console.log(url);
     fetch(url)
-    .then(async (res) => {
-      console.log(res);
-      let data = await res.json();
-      if (data.age >= 90) {
-        // item needs prediction
-        this.predict(data);
-      }
-      console.log(data);
-      this.setState({itemData: data});
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      .then(async (res) => {
+        console.log(res);
+        let d = await res.json();
+        for (let index in d) {
+          let data = d[index];
+          delete data.Binding;
+          delete data.Brand;
+          delete data.Creator;
+          delete data.ProductTypeName;
+          delete data.companiesMoving;
+          delete data.location;
+          delete data.govSchemeSize;
+          delete data.supplyDelhi;
+          delete data.supplyKolkata;
+          delete data.supplyChennai;
+          delete data.supplyMumbai;
+          let title = data.Title.substring(0, 30) + "...";
+          data.Title = title;
+        }
+        let data = d;
+        if (data.age >= 90) {
+          // item needs prediction
+          this.predict(data);
+        }
+        console.log(data);
+        this.setState({ itemData: data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
+    console.log(this.state);
     if (!this.state.itemData) {
       return null;
     }
     return (
       <div>
-        <JsonTable onClickCell={this._onClickCell} rows = {this.state.itemData} excludeColumns={['_id']} />
+        <JsonTable onClickCell={this._onClickCell} rows={this.state.itemData} excludeColumns={['_id', 'Binding', 'Creator', 'ProductTypeName', 'companiesMoving', 'govSchemeSize', 'location', 'supplyChennai', 'supplyDelhi', 'supplyMumbai', 'supplyKolkata']} />
       </div>
     );
   }
