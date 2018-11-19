@@ -1,0 +1,23 @@
+{
+  "name": "aging-inventory-predictor",
+  "version": "1.0.0",
+  "description": "Dell Hackathon project to decide what to do with aging inventory",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanishk98/aging-inventory-predictor.git"
+  },
+  "keywords": [
+    "inventory",
+    "predictor"
+  ],
+  "author": "Kanishk Kakar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanishk98/aging-inventory-predictor/issues"
+  },
+  "homepage": "https://github.com/kanishk98/aging-inventory-predictor#readme"
+}
